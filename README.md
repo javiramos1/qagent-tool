@@ -1,31 +1,9 @@
-<div style="display: flex; justify-content: center; align-items: center;">
-  <img
-    src="https://docs.arcade.dev/images/logo/arcade-logo.png"
-    style="width: 250px;"
-  >
-</div>
-
-<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
-  <img src="https://img.shields.io/github/v/release/javiramos1/qa" alt="GitHub release" style="margin: 0 2px;">
-  <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python version" style="margin: 0 2px;">
-  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" style="margin: 0 2px;">
-  <img src="https://img.shields.io/pypi/v/arcade_qa" alt="PyPI version" style="margin: 0 2px;">
-</div>
-<div style="display: flex; justify-content: center; align-items: center;">
-  <a href="https://github.com/javiramos1/qa" target="_blank">
-    <img src="https://img.shields.io/github/stars/javiramos1/qa" alt="GitHub stars" style="margin: 0 2px;">
-  </a>
-  <a href="https://github.com/javiramos1/qa/fork" target="_blank">
-    <img src="https://img.shields.io/github/forks/javiramos1/qa" alt="GitHub forks" style="margin: 0 2px;">
-  </a>
-</div>
-
-<br>
-<br>
-
 # Arcade Q&A Toolkit
 
 A domain-specific Q&A agent tool built with [Arcade.dev](https://arcade.dev) that intelligently searches predefined documentation websites to answer questions about specific technologies and frameworks.
+
+> **📚 New to Arcade Toolkits?** Check out the [official toolkit creation guide](https://docs.arcade.dev/home/build-tools/create-a-toolkit) to learn more about building and deploying Arcade tools.
+
 
 ## Overview
 
@@ -65,14 +43,6 @@ An Arcade.dev tool that:
 
 ## Installation
 
-### For End Users
-
-Install this toolkit using pip:
-
-```bash
-pip install arcade_qa
-```
-
 ### For Development
 
 If you want to contribute or develop with this toolkit, clone the repository and use the provided Make commands:
@@ -80,7 +50,12 @@ If you want to contribute or develop with this toolkit, clone the repository and
 ```bash
 # Clone the repository
 git clone https://github.com/javiramos1/qa.git
-cd qa
+
+# Install arcade cli
+pip install arcade-ai
+
+# Install poetry if you don't already have it
+pip install poetry
 
 # Install development environment with Poetry
 make install
@@ -88,6 +63,50 @@ make install
 # View all available commands
 make help
 ```
+
+### Running Locally
+
+To run the toolkit locally during development:
+
+```bash
+# Set up your environment variables
+export ARCADE_API_KEY="your_arcade_api_key"
+export GOOGLE_API_KEY="your_google_api_key"
+export SITES_CONFIG="your_compressed_sites_config_json"
+
+# Serve the toolkit locally
+arcade serve
+
+# The toolkit will be available at http://localhost:8000
+# You can view the auto-generated API documentation at http://localhost:8000/docs
+```
+
+This will start a local server where you can test your toolkit tools before deployment.
+
+### Connect to Arcade Engine with ngrok
+
+To connect your locally running toolkit to the Arcade Engine for testing with AI agents:
+
+```bash
+# Install ngrok if you haven't already
+# Visit https://ngrok.com/ to sign up and get your auth token
+
+# Start your toolkit locally (in one terminal)
+arcade serve
+
+# In another terminal, expose your local server
+ngrok http 8000
+
+# Copy the HTTPS URL from ngrok output (e.g., https://abc123.ngrok.io)
+# Use this URL in your Arcade Engine configuration to connect to your local toolkit
+```
+
+**Important Notes:**
+- Always use the HTTPS URL provided by ngrok (not HTTP)
+- Keep both `arcade serve` and `ngrok` running while testing
+- Your toolkit will be accessible to Arcade Engine at the ngrok URL
+- This is perfect for development and testing before deploying to production
+
 
 #### Available Make Commands
 
@@ -204,61 +223,6 @@ User: "How do I create a LangChain agent?"
 3. If needed, scrapes specific pages for detailed examples
 4. Generates comprehensive response with code examples and explanations
 ```
-
-## Deployment
-
-### Deploying to Arcade.dev
-
-To deploy this toolkit as an Arcade.dev tool, follow these steps:
-
-1. **Set up your worker configuration** in `worker.toml`:
-
-```toml
-[[worker]]
-
-[worker.config]
-id = "qa-worker"
-enabled = true
-timeout = 90
-retries = 3
-secret = "your_secret_key_here"
-
-[worker.local_source]
-packages = ["./qa"]
-```
-
-2. **Configure your secrets** by adding them to your Arcade.dev account:
-   - `ARCADE_API_KEY`: Your Arcade.dev API key
-   - `GOOGLE_API_KEY`: Google AI Studio API key for Gemini models
-   - `SITES_CONFIG`: Compressed JSON configuration of your knowledge sources
-
-3. **Deploy the tool**:
-
-```bash
-# Install the Arcade CLI if you haven't already
-pip install arcade-ai
-
-# Deploy your tool
-arcade deploy
-```
-
-4. **Test your deployment**:
-
-```python
-from langchain_arcade import ArcadeToolManager
-
-# Initialize with your deployed tool
-manager = ArcadeToolManager(api_key="your_arcade_api_key")
-tools = manager.init_tools(tools=["your_username.qa_chat"])
-
-# Test the tool
-response = await tools[0].arun("How do I create a LangChain agent?")
-print(response)
-```
-
-For more detailed deployment instructions, see:
-- [Create a Toolkit Guide](https://docs.arcade.dev/home/build-tools/create-a-toolkit)
-- [Arcade Deploy Documentation](https://docs.arcade.dev/home/local-deployment/configure/arcade-deploy)
 
 ## Development
 
