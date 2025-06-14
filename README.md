@@ -2,6 +2,28 @@
 
 A domain-specific Q&A agent tool built with [Arcade.dev](https://arcade.dev) that intelligently searches predefined documentation websites to answer questions about specific technologies and frameworks.
 
+## The Vision: Agents as Tools in Self-Organizing Ecosystems
+
+The **goal** of this project is to demonstrate a new concept of **composite tooling** and **hierarchical agent architectures**. This creates truly non-deterministic agentic workflows where the magic happens: **tools can become agents themselves**, calling other tools recursively.
+
+### How It Works
+In this example, we develop an intelligent Q&A agent that:
+- Uses an LLM (Google Gemini) for reasoning
+- Leverages 2 specialized tools (Google Search + Web Scraping)
+- **Is itself deployed as a tool** that can be discovered and used by other agents
+
+### The Emergent Intelligence
+
+Imagine an agent that discovers this Q&A tool, uses it to research documentation, then automatically finds and calls an email API tool to send technical guidance to developers — **all without predetermined workflows**. 
+
+The result is **self-organizing agent ecosystems** that adapt based on available capabilities rather than rigid workflows typically seen in LangGraph. What once required complex manual setup now emerges naturally from tool interactions, making sophisticated multi-agent systems accessible to any developer.
+
+This creates a hierarchy where:
+- **Level 1**: Basic tools (search, scrape, email)
+- **Level 2**: Composite agents (this Q&A agent combining search + scrape + LLM)
+- **Level 3**: Meta-agents that discover and orchestrate Level 2 agents
+- **Level N**: Infinite recursive possibilities...
+
 > **📚 New to Arcade Toolkits?** Check out the [official toolkit creation guide](https://docs.arcade.dev/home/build-tools/create-a-toolkit) to learn more about building and deploying Arcade tools.
 
 
