@@ -68,18 +68,28 @@ make help
 
 To run the toolkit locally during development:
 
+
+First, add the secrets to [Arcade.dev](https://docs.arcade.dev/home/build-tools/create-a-tool-with-secrets):
 ```bash
 # Set up your environment variables
 export ARCADE_API_KEY="your_arcade_api_key"
 export GOOGLE_API_KEY="your_google_api_key"
 export SITES_CONFIG="your_compressed_sites_config_json"
+```
 
+Check the session below on how to set the compressed sites config.
+
+Next, run the server locally
+
+```bash
 # Serve the toolkit locally
 arcade serve
 
 # The toolkit will be available at http://localhost:8000
 # You can view the auto-generated API documentation at http://localhost:8000/docs
 ```
+
+See below to see how to set the
 
 This will start a local server where you can test your toolkit tools before deployment.
 
@@ -197,6 +207,63 @@ The knowledge sources should be provided as a list of dictionaries:
     }
 ]
 ```
+
+The env var must contain the compresssed and encoded string. To do so run:
+
+```python
+# Encode the compact JSON string to bytes (UTF-8 is common for JSON)
+json_bytes = json_output_compact.encode('utf-8')
+
+# Compress the bytes using zlib
+compressed_data = zlib.compress(json_bytes)
+
+# Encode the compressed bytes to a base64 string for text representation
+compressed_base64_string = base64.b64encode(compressed_data).decode('utf-8')
+```
+
+Example Data:
+
+```json
+[
+    {
+        "domain": "AI Agent Frameworks",
+        "site": "python.langchain.com",
+        "description": "LangChain documentation for building applications with LLMs through composability"
+    },
+    {
+        "domain": "AI Agent Frameworks",
+        "site": "langchain-ai.github.io/langgraph",
+        "description": "LangGraph documentation for building stateful multi-actor applications with LLMs"
+    },
+    {
+        "domain": "AI Agent Frameworks",
+        "site": "docs.crewai.com",
+        "description": "CrewAI documentation for building AI agent crews and multi-agent systems"
+    },
+    {
+        "domain": "AI Agent Frameworks",
+        "site": "github.com/openai/swarm",
+        "description": "OpenAI Swarm documentation for lightweight multi-agent orchestration"
+    },
+    {
+        "domain": "AI Operations",
+        "site": "docs.agentops.ai",
+        "description": "AgentOps documentation for testing debugging and deploying AI agents and LLM apps"
+    },
+    {
+        "domain": "AI Data Frameworks",
+        "site": "docs.llamaindex.ai",
+        "description": "LlamaIndex documentation for building LLM-powered agents over your data"
+    }
+]
+```
+
+Compressed:
+
+```json
+eJyVkstOwzAQRX/FyrpN9+yqIlCloC5YIhYT27VHOBnLD0KE+u+MU4qAhopuosjHuXN8naf3SlEH2Fc31Xor1kb3SdwF6PRA4SVWiypi0gz9mCz1tYPeSMv7a0kdU6WjDOgTUklomG4KFYpk7jgLChF7CqLN6BT2RoD3DuUEohgwWdE0D1EkGygbKzjXU4QWHaaxOiz+K/hltgSsDcfmtkZalWUTwNtZ2ftCLslGXtT77ESXXcIlyMR0/gRXuPLAWMugB1ad63HDiAMueDGFKb6kRAG9OhlOq3GMSXfXKH02xjYr8roHXMUBwrnajiEHPRY4I+jQ2DTo8vwhREFaHVOYdp5pceiR/O5o+pg8v+CZyXSWnY8zFolHlZaUbrMx00/HBSntHY3f2zsWx5dXrvS8rVtI8Pf9OQdlq9Jvc3ZNodtCL10jj156GnTQ6mRErzqIkXIQisdXh+cPDUxNYw==
+```
+
 
 ### Tool Parameters
 
